@@ -4,7 +4,8 @@
   "description": "Broadcast messages to groups across your organisation",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "dev": "nodemon --watch server ./server/bin/www --exec babel-node"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "babel-preset-env": "^1.6.0",
     "eslint": "^4.6.1",
     "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "nodemon": "^1.12.0"
   }
 }
