@@ -23,11 +23,13 @@
     "cookie-parser": "^1.4.3",
     "debug": "^3.0.1",
     "express": "^4.15.4",
+    "lodash": "^4.17.4",
     "morgan": "^1.8.2",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.8.3",
-    "serve-favicon": "^2.4.3"
+    "serve-favicon": "^2.4.3",
+    "validator": "^8.2.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.0",

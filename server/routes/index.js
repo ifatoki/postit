@@ -1,4 +1,5 @@
 import express from 'express';
+import UserController from '../controllers/UserController';
 
 const apiEndPoints = express.Router();
 
@@ -7,6 +8,8 @@ apiEndPoints.get('/', (req, res) => {
     message: "Welcome Mr Dev, c'mon lets build shiii"
   });
 });
+
+apiEndPoints.post('/user/signup', UserController.signUp);
 
 /**
  * Handles all backend endpoints.
