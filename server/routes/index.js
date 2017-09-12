@@ -1,10 +1,29 @@
 import express from 'express';
 
-const router = express.Router();
+const apiEndPoints = express.Router();
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  res.sendfile('../../template/login_signup.html');
+apiEndPoints.get('/', (req, res) => {
+  res.status(200).send({
+    message: "Welcome Mr Dev, c'mon lets build shiii"
+  });
 });
 
-export default router;
+/**
+ * Handles all backend endpoints.
+ * @function index
+ *
+ * @param {object} app - Instance of an express App
+ *
+ * @return {void}
+ */
+const index = (app) => {
+  app.use('/api', apiEndPoints);
+  /* GET home page. */
+  app.get('/*', (req, res) => {
+    res.status(200).send({
+      message: 'Welcome to Postit'
+    });
+  });
+};
+
+export default index;
