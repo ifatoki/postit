@@ -3,7 +3,7 @@ import logger from 'morgan';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import favicon from 'serve-favicon';
+// import favicon from 'serve-favicon';
 import index from './routes/index';
 
 const app = express();
