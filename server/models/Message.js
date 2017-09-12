@@ -1,6 +1,10 @@
 export default (sequelize, DataTypes) => {
   const Message = sequelize.define('Message', {
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     content: DataTypes.STRING,
     authorId: DataTypes.INTEGER
   });

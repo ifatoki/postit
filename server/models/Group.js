@@ -1,6 +1,10 @@
 export default (sequelize, DataTypes) => {
   const Group = sequelize.define('Group', {
-    title: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     purpose: DataTypes.STRING,
     creatorId: DataTypes.INTEGER
   });
