@@ -4,6 +4,7 @@ const Errors = {
     USER_NOT_FOUND: 202,
     USER_DUPLICATE_USERNAME: 203,
     USER_DUPLICATE_EMAIL: 204,
+    USER_INVALID_PASSWORD: 205,
   },
 
   genericErrors: {

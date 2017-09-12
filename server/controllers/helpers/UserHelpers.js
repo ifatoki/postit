@@ -4,44 +4,110 @@ import GenericHelpers from './GenericHelpers';
 
 const { userErrors } = Errors;
 const UserHelpers = {
-  confirmEmailUniqueness(email) {
-    return User.findOne({
+  /**
+   * Confirm if email is unique
+   * @function confirmEmailUniqueness
+   *
+   * @param {string} email - Email Address to check
+   *
+   * @return {void}
+   *
+   * @throws {Error} - Error indicating duplication
+   */
+  confirmEmailUniqueness: email =>
+    User.findOne({
       where: {
         email
       }
     }).then((user) => {
       if (user) GenericHelpers.throwError(userErrors.USER_DUPLICATE_EMAIL);
-    });
-  },
+    }),
 
-  filterUser({ id, username, email }) {
-    return {
-      id,
-      username,
-      email
-    };
-  },
+  /**
+   * Filter the user object before returning it
+   * @function filterUser
+   *
+   * @param {object} userData - User data to be filtered
+   *
+   * @return {object} - Filtered user object
+   */
+  filterUser: ({ id, username, email }) => ({
+    id,
+    username,
+    email
+  }),
 
-  confirmUsernameUniqueness(username) {
-    return User.findOne({
+  /**
+   * Get a user by email or username
+   * @function getUserByIdentifier
+   *
+   * @param {string} identifier - User email or username
+   *
+   * @return {object} - A user object
+   *
+   * @throws {Error} - A user not found error
+   */
+  getUserByIdentifier: identifier =>
+    User.findOne({
+      where: {
+        $or: {
+          username: identifier,
+          email: identifier
+        }
+      }
+    })
+      .then((user) => {
+        if (!user) GenericHelpers.throwError(userErrors.USER_NOT_FOUND);
+        return user;
+      }),
+
+  /**
+   * Confirm uniqueness of username
+   * @function confirmUsernameUniqueness
+   *
+   * @param {string} username - Username to be confirmed
+   *
+   * @throws {Error} - A duplicate username error
+   *
+   * @return {void}
+   */
+  confirmUsernameUniqueness: username =>
+    User.findOne({
       where: {
         username
       }
     }).then((user) => {
       if (user) GenericHelpers.throwError(userErrors.USER_DUPLICATE_USERNAME);
-    });
-  },
+    }),
 
-  sendUser(user, res) {
-    res.status(201).send({
+  /**
+   * Send the user object with the response object from the server
+   * @function sendUser
+   *
+   * @param {object} user - User object to be sent
+   * @param {number} status - Server status
+   * @param {object} res - Server response object
+   *
+   * @return {void}
+   */
+  sendUser: (user, status, res) =>
+    res.status(status).send({
       user: UserHelpers.filterUser(user)
-    });
-  },
+    }),
 
-  createUser(userData) {
-    return User.create(userData)
-      .then(user => user);
-  }
+  /**
+   * Creates new user in the database
+   * @function createUser
+   *
+   * @param {object} userData - Userdata for creating new user
+   * @param {string} hashedPassword - Encrypted user password
+   *
+   * @returns {object} - User object
+   */
+  createUser: (userData, hashedPassword) => {
+    userData.password = hashedPassword;
+    return User.create(userData);
+  },
 };
 
 export default UserHelpers;

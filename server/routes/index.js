@@ -11,6 +11,8 @@ apiEndPoints.get('/', (req, res) => {
 
 apiEndPoints.post('/user/signup', UserController.signUp);
 
+apiEndPoints.post('/user/signin', UserController.signIn);
+
 /**
  * Handles all backend endpoints.
  * @function index

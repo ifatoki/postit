@@ -44,7 +44,6 @@ const server = http.createServer(app);
  */
 
 const onError = (error) => {
-  console.log('I am erroring')
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -73,7 +72,6 @@ const onError = (error) => {
  */
 
 const onListening = () => {
-  console.log('I am listening')
   const addr = server.address();
   const bind = typeof addr === 'string'
     ? `pipe ${addr}`
@@ -86,7 +84,6 @@ models.sequelize.sync().then(() => {
   /**
  * Listen on provided port, on all network interfaces.
  */
-  console.log('I got in')
   server.listen(port);
   server.on('error', onError);
   server.on('listening', onListening);
