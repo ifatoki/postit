@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "andeladeveloper",
+    "password": null,
+    "database": "postit-dev",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "andeladeveloper",
+    "password": null,
+    "database": "postit-test",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "andeladeveloper",
+    "password": null,
+    "database": "postit-production",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
