@@ -1,39 +1,8 @@
 import lodash from 'lodash';
 import Errors from './Errors';
 
-const { userErrors } = Errors;
+const { userErrors, groupErrors } = Errors;
 const GenericHelpers = {
-  /**
-   * Create a string representation of a validation error object.
-   * @function stringifyValidationErrors
-   *
-   * @param {object} errorsObject - validation error object
-   *
-   * @return {string} - A string containing validation errors
-   */
-  stringifyValidationErrors: errorsObject => (
-    lodash.reduce(
-      errorsObject,
-      (error, cummulator) => `${cummulator}\n${error}`,
-      ''
-    )),
-
-  /**
-   * Send an error response for the server
-   * @function sendError
-   *
-   * @param {string} message - Error message
-   * @param {number} status - Server Error Code
-   * @param {object} res - Server response object
-   *
-   * @return {void}
-   */
-  sendError: (message, status, res) => {
-    res.status(status).send({
-      message
-    });
-  },
-
   /**
    * Resolve errors generated on endpoints
    * @function resolveError
@@ -46,8 +15,11 @@ const GenericHelpers = {
   resolveError: (error, res) => {
     let message;
     let status;
-
     switch (parseInt(error.message, 10)) {
+      case groupErrors.GROUP_DUPLICATE_NAME:
+        message = 'group with this name already exists';
+        status = 400;
+        break;
       case userErrors.USER_INVALID_ID:
         message = 'invalid user id';
         status = 400;
@@ -77,12 +49,45 @@ const GenericHelpers = {
   },
 
   /**
+   * Send an error response for the server
+   * @function sendError
+   *
+   * @param {string} message - Error message
+   * @param {number} status - Server Error Code
+   * @param {object} res - Server response object
+   *
+   * @return {void}
+   */
+  sendError: (message, status, res) => {
+    res.status(status).send({
+      message
+    });
+  },
+
+  /**
+   * Create a string representation of a validation error object.
+   * @function stringifyValidationErrors
+   *
+   * @param {object} errorsObject - validation error object
+   *
+   * @return {string} - A string containing validation errors
+   */
+  stringifyValidationErrors: errorsObject => (
+    lodash.reduce(
+      errorsObject,
+      (error, cummulator) => `${cummulator}\n${error}`,
+      ''
+    )),
+
+  /**
    * Throws a new Error with the passed error message
    * @function throwError
    *
    * @param {any} errorMessage - Error message
    *
-   * @return {Error} - Error object with error message
+   * @return {void}
+   *
+   * @throws {Error} - Error object with error message
    */
   throwError: (errorMessage) => {
     throw new Error(errorMessage);

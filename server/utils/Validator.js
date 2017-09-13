@@ -22,6 +22,51 @@ const resolveErrors = errors => ({
  */
 export default class Validator {
   /**
+   * Confirms the validity of data used to create new groups
+   * @method validateNewGroup
+   *
+   * @static
+   *
+   * @param {object} groupData - Data for creating new group
+   *
+   * @returns {object} - An object containing errors and isValid
+   *
+   * @memberof Validator
+   */
+  static validateNewGroup({ name }) {
+    this.errors = {};
+    if (name === undefined || validator.isEmpty(name.toString())) {
+      this.errors.name = 'group name is required';
+    }
+    return resolveErrors(this.errors);
+  }
+
+  /**
+   * Confirms the validity of user login data
+   * @method validateSignIn
+   *
+   * @static
+   *
+   * @param {object} userData - An object containing user login data
+   *
+   * @returns {object} - An object containing errors and isValid
+   *
+   * @memberof Validator
+   */
+  static validateSignIn({
+    identifier, password
+  }) {
+    this.errors = {};
+    if (identifier === undefined || validator.isEmpty(identifier.toString())) {
+      this.errors.identifier = 'email or username is required';
+    }
+    if (password === undefined || validator.isEmpty(password.toString())) {
+      this.errors.password = 'password is required';
+    }
+    return resolveErrors(this.errors);
+  }
+
+  /**
    * Confirms validity of user signup data
    * @method validateSignUp
    *
@@ -56,31 +101,6 @@ export default class Validator {
       this.errors.password = "passwords don't match";
     }
 
-    return resolveErrors(this.errors);
-  }
-
-  /**
-   * Confirms the validity of user login data
-   * @method validateSignIn
-   *
-   * @static
-   *
-   * @param {object} userData - An object containing user login data
-   *
-   * @returns {object} - An object containing errors and isValid
-   *
-   * @memberof Validator
-   */
-  static validateSignIn({
-    identifier, password
-  }) {
-    this.errors = {};
-    if (identifier === undefined || validator.isEmpty(identifier.toString())) {
-      this.errors.identifier = 'email or username is required';
-    }
-    if (password === undefined || validator.isEmpty(password.toString())) {
-      this.errors.password = 'password is required';
-    }
     return resolveErrors(this.errors);
   }
 }

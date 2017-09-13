@@ -24,44 +24,6 @@ const UserHelpers = {
     }),
 
   /**
-   * Filter the user object before returning it
-   * @function filterUser
-   *
-   * @param {object} userData - User data to be filtered
-   *
-   * @return {object} - Filtered user object
-   */
-  filterUser: ({ id, username, email }) => ({
-    id,
-    username,
-    email
-  }),
-
-  /**
-   * Get a user by email or username
-   * @function getUserByIdentifier
-   *
-   * @param {string} identifier - User email or username
-   *
-   * @return {object} - A user object
-   *
-   * @throws {Error} - A user not found error
-   */
-  getUserByIdentifier: identifier =>
-    User.findOne({
-      where: {
-        $or: {
-          username: identifier,
-          email: identifier
-        }
-      }
-    })
-      .then((user) => {
-        if (!user) GenericHelpers.throwError(userErrors.USER_NOT_FOUND);
-        return user;
-      }),
-
-  /**
    * Confirm uniqueness of username
    * @function confirmUsernameUniqueness
    *
@@ -81,6 +43,56 @@ const UserHelpers = {
     }),
 
   /**
+   * Creates new user in the database
+   * @function createUser
+   *
+   * @param {object} userData - Userdata for creating new user
+   * @param {string} hashedPassword - Encrypted user password
+   *
+   * @returns {Promise} - Resolves to User object or Error
+   */
+  createUser: (userData, hashedPassword) => {
+    userData.password = hashedPassword;
+    return User.create(userData);
+  },
+
+  /**
+   * Filter the user object before returning it
+   * @function filterUser
+   *
+   * @param {object} userData - User data to be filtered
+   *
+   * @return {object} - Filtered user object
+   */
+  filterUser: ({ id, username, email }) => ({
+    id,
+    username,
+    email
+  }),
+
+  /**
+   * Get a user by email or username
+   * @function getUserByIdentifier
+   *
+   * @param {string} identifier - User email or username
+   *
+   * @return {Promise} - Resolves to user or error
+   */
+  getUserByIdentifier: identifier =>
+    User.findOne({
+      where: {
+        $or: {
+          username: identifier,
+          email: identifier
+        }
+      }
+    })
+      .then((user) => {
+        if (!user) GenericHelpers.throwError(userErrors.USER_NOT_FOUND);
+        return user;
+      }),
+
+  /**
    * Send the user object with the response object from the server
    * @function sendUser
    *
@@ -94,20 +106,6 @@ const UserHelpers = {
     res.status(status).send({
       user: UserHelpers.filterUser(user)
     }),
-
-  /**
-   * Creates new user in the database
-   * @function createUser
-   *
-   * @param {object} userData - Userdata for creating new user
-   * @param {string} hashedPassword - Encrypted user password
-   *
-   * @returns {object} - User object
-   */
-  createUser: (userData, hashedPassword) => {
-    userData.password = hashedPassword;
-    return User.create(userData);
-  },
 };
 
 export default UserHelpers;

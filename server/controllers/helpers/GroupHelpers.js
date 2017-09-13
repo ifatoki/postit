@@ -1,0 +1,75 @@
+import { Group } from '../../models';
+import Errors from '../helpers/Errors';
+import GenericHelpers from './GenericHelpers';
+
+const { groupErrors } = Errors;
+
+const GroupHelpers = {
+  /**
+   * Check uniqueness of groupname against existing group names
+   * @function confirmGroupNameUniqueness
+   *
+   * @param {string} name - Group name to check
+   *
+   * @return {void}
+   *
+   * @throws {Error} - Error containing duplicate group name message
+   */
+  confirmGroupNameUniqueness: name =>
+    Group.findOne({
+      where: {
+        name
+      }
+    })
+      .then((group) => {
+        if (group) GenericHelpers.throwError(groupErrors.GROUP_DUPLICATE_NAME);
+      }),
+
+  /**
+   * Create a new Group with passed data
+   * @function createGroup
+   *
+   * @param {object} groupData - data to create new group with
+   * @param {object} user - current logged in user
+   *
+   * @returns {Promise} - Resolves to new Group or Error
+   */
+  createGroup: (groupData, user) => {
+    groupData.creatorId = user.id;
+    return Group.create(groupData);
+  },
+
+  /**
+   * Filter the group object before returning it
+   * @function filterGroup
+   *
+   * @param {object} GroupData - group data to be filtered
+   *
+   * @return {object} - Filtered group object
+   */
+  filterGroup: ({
+    id, name, purpose, creatorId
+  }) => ({
+    id,
+    name,
+    purpose,
+    creatorId
+  }),
+
+  /**
+   * Send the Group object with the response object from the server
+   * @function sendGroup
+   *
+   * @param {object} group - Group object to be sent
+   * @param {number} status - Server status
+   * @param {object} res - Server response object
+   *
+   * @return {void}
+   */
+  sendGroup: (group, status, res) =>
+    res.status(status).send({
+      group: GroupHelpers.filterGroup(group)
+    }),
+};
+
+export default GroupHelpers;

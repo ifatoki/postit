@@ -1,10 +1,27 @@
 import bcrypt from 'bcryptjs';
+import faker from 'faker';
 import Errors from './Errors';
 import GenericHelpers from './GenericHelpers';
 
 const { userErrors } = Errors;
 
 const AuthenticationHelpers = {
+  /**
+   * Compare string with hashed password
+   * @function comparePassword
+   *
+   * @param {string} userPassword - Password string to be matched with hash
+   * @param {object} user - User object containing hashed password
+   *
+   * @return {Promise} - Promise resolving to user or invalid password error
+   */
+  comparePassword: (userPassword, user) =>
+    bcrypt.compare(userPassword, user.password)
+      .then((match) => {
+        if (!match) GenericHelpers.throwError(userErrors.USER_INVALID_PASSWORD);
+        return user;
+      }),
+
   /**
    * Encrypt password before writing it to database.
    * @function encryptPassword
@@ -24,20 +41,22 @@ const AuthenticationHelpers = {
     }),
 
   /**
-   * Compare string with hashed password
-   * @function comparePassword
+   * Simulate inserting user in req after authentication
+   * @function injectMockuser
    *
-   * @param {string} userPassword - Password string to be matched with hash
-   * @param {object} user - User object containing hashed password
-   *
-   * @return {Promise} - Promise resolving to user or invalid password error
+   * @param {object} req - Server request object
+   * @param {object} res - Server response object
+   * @param {function} next
+   * =
+   * @returns {void}
    */
-  comparePassword: (userPassword, user) =>
-    bcrypt.compare(userPassword, user.password)
-      .then((match) => {
-        if (!match) GenericHelpers.throwError(userErrors.USER_INVALID_PASSWORD);
-        return user;
-      }),
+  injectMockUser: (req, res, next) => {
+    req.user = {
+      id: 1,
+      username: faker.internet.userName()
+    };
+    next();
+  }
 };
 
 export default AuthenticationHelpers;
