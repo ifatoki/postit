@@ -22,6 +22,35 @@ const resolveErrors = errors => ({
  */
 export default class Validator {
   /**
+   * Validate data for creating new message and adding it to a group
+   * @function validateAddNewMessageToGroup
+   *
+   * @static
+   *
+   * @param {object} actionData - Object containing message and group data
+   *
+   * @returns {object} - An object containing errors and isValid
+   *
+   * @memberof Validator
+   */
+  static validateAddNewMessageToGroup({
+    groupId, title
+  }) {
+    this.errors = {};
+
+    if (groupId === undefined) {
+      this.errors.groupId = 'groupId is required';
+    } else if (!validator.isNumeric(groupId.toString())) {
+      this.errors.groupId = 'groupId is invalid. enter a number';
+    }
+    if (title === undefined || validator.isEmpty(title.toString())) {
+      this.errors.title = 'title is required';
+    }
+
+    return resolveErrors(this.errors);
+  }
+
+  /**
    * Validate data for adding user to group
    * @function validateAddUserToGroup
    *
@@ -50,6 +79,7 @@ export default class Validator {
     }
     return resolveErrors(this.errors);
   }
+
   /**
    * Confirms the validity of data used to create new groups
    * @method validateNewGroup

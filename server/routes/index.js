@@ -2,6 +2,7 @@ import express from 'express';
 import AuthenticationHelpers from
   '../controllers/helpers/AuthenticationHelpers';
 import GroupController from '../controllers/GroupController';
+import MessageController from '../controllers/MessageController';
 import UserController from '../controllers/UserController';
 
 const apiEndPoints = express.Router();
@@ -33,6 +34,12 @@ apiEndPoints.post(
   '/group/:groupId/user',
   injectMockUser,
   GroupController.addUserToGroup
+);
+
+apiEndPoints.post(
+  '/group/:groupId/message',
+  injectMockUser,
+  MessageController.broadcastMessageToGroup
 );
 
 /**

@@ -1,7 +1,7 @@
 import lodash from 'lodash';
 import Errors from './Errors';
 
-const { userErrors, groupErrors } = Errors;
+const { userErrors, groupErrors, messageErrors } = Errors;
 const GenericHelpers = {
   /**
    * Resolve errors generated on endpoints
@@ -18,11 +18,15 @@ const GenericHelpers = {
     switch (parseInt(error.message, 10)) {
       case groupErrors.GROUP_DUPLICATE_NAME:
         message = 'group with this name already exists';
-        status = 400;
+        status = 409;
         break;
       case groupErrors.GROUP_NOT_FOUND:
         message = 'group not found';
         status = 404;
+        break;
+      case messageErrors.MESSAGE_DUPLICATE_TITLE:
+        message = 'message with this title already exists';
+        status = 409;
         break;
       case userErrors.USER_INVALID_ID:
         message = 'invalid user id';
@@ -30,10 +34,10 @@ const GenericHelpers = {
         break;
       case userErrors.USER_DUPLICATE_EMAIL:
         message = 'user with this email already exists';
-        status = 400;
+        status = 409;
         break;
       case userErrors.USER_DUPLICATE_USERNAME:
-        status = 400;
+        status = 409;
         message = 'user with this username already exists';
         break;
       case userErrors.USER_INVALID_PASSWORD:

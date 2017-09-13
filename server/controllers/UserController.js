@@ -3,7 +3,7 @@ import UserHelpers from './helpers/UserHelpers';
 import GenericHelpers from './helpers/GenericHelpers';
 import AuthenticationHelpers from './helpers/AuthenticationHelpers';
 
-const { stringifyValidationErrors, sendError } = GenericHelpers;
+const { stringifyValidationErrors, sendMessage } = GenericHelpers;
 
 const UserController = {
   /**
@@ -25,7 +25,7 @@ const UserController = {
         .then(user => UserHelpers.sendUser(user, 200, res))
         .catch(error => GenericHelpers.resolveError(error, res));
     } else {
-      sendError(stringifyValidationErrors(validator.errors), 400, res);
+      sendMessage(stringifyValidationErrors(validator.errors), 400, res);
     }
   },
 
@@ -49,7 +49,7 @@ const UserController = {
         .then(user => UserHelpers.sendUser(user, 201, res))
         .catch(error => GenericHelpers.resolveError(error, res));
     } else {
-      sendError(stringifyValidationErrors(validator.errors), 400, res);
+      sendMessage(stringifyValidationErrors(validator.errors), 400, res);
     }
   },
 };

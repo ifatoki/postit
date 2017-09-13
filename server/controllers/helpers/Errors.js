@@ -4,6 +4,10 @@ const Errors = {
     GROUP_NOT_FOUND: 302,
   },
 
+  messageErrors: {
+    MESSAGE_DUPLICATE_TITLE: 401
+  },
+
   userErrors: {
     USER_DUPLICATE_USERNAME: 201,
     USER_DUPLICATE_EMAIL: 205,
