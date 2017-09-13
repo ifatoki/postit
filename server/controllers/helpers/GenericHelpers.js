@@ -15,6 +15,7 @@ const GenericHelpers = {
   resolveError: (error, res) => {
     let message;
     let status;
+
     switch (parseInt(error.message, 10)) {
       case groupErrors.GROUP_DUPLICATE_NAME:
         message = 'group with this name already exists';
@@ -23,6 +24,10 @@ const GenericHelpers = {
       case groupErrors.GROUP_NOT_FOUND:
         message = 'group not found';
         status = 404;
+        break;
+      case groupErrors.GROUP_NOT_MEMBER:
+        message = 'user not member of requested group';
+        status = 401;
         break;
       case messageErrors.MESSAGE_DUPLICATE_TITLE:
         message = 'message with this title already exists';

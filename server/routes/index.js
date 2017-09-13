@@ -42,6 +42,12 @@ apiEndPoints.post(
   MessageController.broadcastMessageToGroup
 );
 
+apiEndPoints.get(
+  '/group/:groupId/messages',
+  injectMockUser,
+  MessageController.fetchGroupMessages
+);
+
 /**
  * Handles all backend endpoints.
  * @function index

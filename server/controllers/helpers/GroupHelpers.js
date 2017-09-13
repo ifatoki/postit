@@ -54,6 +54,28 @@ const GroupHelpers = {
       }),
 
   /**
+   * Confirm if the passed user belongs to the passed group
+   * @function confirmUserBelongsToGroup
+   *
+   * @param {object} group - Group to be confirmed
+   * @param {number} userId - User to be confirmed
+   *
+   * @returns {Promise} - Resolves to group or error
+   */
+  confirmUserBelongsToGroup: (group, userId) =>
+    group.getUsers({
+      where: {
+        id: userId
+      }
+    })
+      .then((users) => {
+        if (users.length < 1) {
+          GenericHelpers.throwError(groupErrors.GROUP_NOT_MEMBER);
+        }
+        return group;
+      }),
+
+  /**
    * Create a new Group with passed data
    * @function createGroup
    *

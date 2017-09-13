@@ -39,7 +39,34 @@ const MessageController = {
     } else {
       sendMessage(stringifyValidationErrors(validator.errors), 400, res);
     }
-  }
+  },
+
+  /**
+   * Fetch all messages from the passed group
+   * @function fetchGroupMessages
+   *
+   * @param {object} req - Server request object
+   * @param {object} res - Server response object
+   *
+   * @return {void}
+   */
+  fetchGroupMessages: (req, res) => {
+    const { groupId } = req.params;
+    const userId = req.user.id;
+    const validator = Validator.validateFetchGroupMessages(groupId);
+
+    if (validator.isValid) {
+      GroupHelpers.confirmGroupExists(groupId)
+        .then(existingGroup =>
+          GroupHelpers.confirmUserBelongsToGroup(existingGroup, userId))
+        .then(MessageHelpers.fetchGroupMessages)
+        .then(messages => MessageHelpers
+          .sendMessages(MessageHelpers.filterMessages(messages), 200, res))
+        .catch(error => GenericHelpers.resolveError(error, res));
+    } else {
+      sendMessage(stringifyValidationErrors(validator.errors), 400, res);
+    }
+  },
 };
 
 export default MessageController;

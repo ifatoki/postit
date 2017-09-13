@@ -101,6 +101,30 @@ export default class Validator {
   }
 
   /**
+   * Confirms validity of groupId to be used to fetch messages
+   * @method validateFetchGroupMessages
+   *
+   * @static
+   *
+   * @param {number} groupId - Id of group whose messages should be fetched
+   *
+   * @returns {object} - An object containing errors and isValid
+   *
+   * @memberof Validator
+   */
+  static validateFetchGroupMessages(groupId) {
+    this.errors = {};
+
+    if (groupId === undefined) {
+      this.errors.groupId = 'groupId is required';
+    } else if (!validator.isNumeric(groupId.toString())) {
+      this.errors.groupId = 'groupId is invalid. enter a number';
+    }
+
+    return resolveErrors(this.errors);
+  }
+
+  /**
    * Confirms the validity of user login data
    * @method validateSignIn
    *

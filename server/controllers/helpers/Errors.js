@@ -2,6 +2,7 @@ const Errors = {
   groupErrors: {
     GROUP_DUPLICATE_NAME: 301,
     GROUP_NOT_FOUND: 302,
+    GROUP_NOT_MEMBER: 303,
   },
 
   messageErrors: {
