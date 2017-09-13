@@ -20,6 +20,10 @@ const GenericHelpers = {
         message = 'group with this name already exists';
         status = 400;
         break;
+      case groupErrors.GROUP_NOT_FOUND:
+        message = 'group not found';
+        status = 404;
+        break;
       case userErrors.USER_INVALID_ID:
         message = 'invalid user id';
         status = 400;
@@ -45,20 +49,20 @@ const GenericHelpers = {
         message = 'oops, our server just went rogue. please try again';
         break;
     }
-    GenericHelpers.sendError(message, status, res);
+    GenericHelpers.sendMessage(message, status, res);
   },
 
   /**
-   * Send an error response for the server
-   * @function sendError
+   * Send a message response for the server
+   * @function sendMessage
    *
-   * @param {string} message - Error message
-   * @param {number} status - Server Error Code
+   * @param {string} message - Response message
+   * @param {number} status - Server response code
    * @param {object} res - Server response object
    *
    * @return {void}
    */
-  sendError: (message, status, res) => {
+  sendMessage: (message, status, res) => {
     res.status(status).send({
       message
     });

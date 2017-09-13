@@ -6,6 +6,34 @@ const { groupErrors } = Errors;
 
 const GroupHelpers = {
   /**
+   * Add a user to a group
+   * @function addUserToGroup
+   *
+   * @param {object} group - Group object to which user should be added
+   * @param {object} user - User object to be added to group
+   *
+   * @returns {Promise} - Resolves to a success message or an error
+   */
+  addUserToGroup: (group, user) =>
+    group.addUser(user)
+      .then(() => `${user.username} added successfully to ${group.name}`),
+
+  /**
+   * Confirm existence of a group with the passed id
+   * @function confirmGroupExists
+   *
+   * @param {number} id - groupId to be validated
+   *
+   * @returns {Promise} - Resolves to a group or a group not found error.
+   */
+  confirmGroupExists: id =>
+    Group.findById(id)
+      .then((group) => {
+        if (!group) GenericHelpers.throwError(groupErrors.GROUP_NOT_FOUND);
+        return group;
+      }),
+
+  /**
    * Check uniqueness of groupname against existing group names
    * @function confirmGroupNameUniqueness
    *

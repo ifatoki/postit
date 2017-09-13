@@ -24,6 +24,21 @@ const UserHelpers = {
     }),
 
   /**
+   * Confirm the existence of a user with the passed id
+   * @function confirmUserExists
+   *
+   * @param {number} id - User id to be validated
+   *
+   * @returns {Promise} - Resolves to user or an error.
+   */
+  confirmUserExists: id =>
+    User.findById(id)
+      .then((user) => {
+        if (!user) GenericHelpers.throwError(userErrors.USER_NOT_FOUND);
+        return user;
+      }),
+
+  /**
    * Confirm uniqueness of username
    * @function confirmUsernameUniqueness
    *

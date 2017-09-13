@@ -22,6 +22,35 @@ const resolveErrors = errors => ({
  */
 export default class Validator {
   /**
+   * Validate data for adding user to group
+   * @function validateAddUserToGroup
+   *
+   * @static
+   *
+   * @param {object} actionData
+   *
+   * @returns {object} - An object containing errors and isValid
+   *
+   * @memberof Validator
+   */
+  static validateAddUserToGroup({
+    groupId, userId
+  }) {
+    this.errors = {};
+
+    if (groupId === undefined) {
+      this.errors.groupId = 'groupId is required';
+    } else if (!validator.isNumeric(groupId.toString())) {
+      this.errors.groupId = 'groupId is invalid. enter a number';
+    }
+    if (userId === undefined) {
+      this.errors.userId = 'userId is required';
+    } else if (!validator.isNumeric(userId.toString())) {
+      this.errors.userId = 'userId is invalid. enter a number';
+    }
+    return resolveErrors(this.errors);
+  }
+  /**
    * Confirms the validity of data used to create new groups
    * @method validateNewGroup
    *

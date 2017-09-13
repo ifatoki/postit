@@ -13,11 +13,27 @@ apiEndPoints.get('/', (req, res) => {
   });
 });
 
-apiEndPoints.post('/user/signup', UserController.signUp);
+apiEndPoints.post(
+  '/user/signup',
+  UserController.signUp
+);
 
-apiEndPoints.post('/user/signin', UserController.signIn);
+apiEndPoints.post(
+  '/user/signin',
+  UserController.signIn
+);
 
-apiEndPoints.post('/group', injectMockUser, GroupController.newGroup);
+apiEndPoints.post(
+  '/group',
+  injectMockUser,
+  GroupController.newGroup
+);
+
+apiEndPoints.post(
+  '/group/:groupId/user',
+  injectMockUser,
+  GroupController.addUserToGroup
+);
 
 /**
  * Handles all backend endpoints.
