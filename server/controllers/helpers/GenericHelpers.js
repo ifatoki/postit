@@ -33,10 +33,6 @@ const GenericHelpers = {
         message = 'message with this title already exists';
         status = 409;
         break;
-      case userErrors.USER_INVALID_ID:
-        message = 'invalid user id';
-        status = 400;
-        break;
       case userErrors.USER_DUPLICATE_EMAIL:
         message = 'user with this email already exists';
         status = 409;

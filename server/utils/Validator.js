@@ -38,9 +38,7 @@ export default class Validator {
   }) {
     this.errors = {};
 
-    if (groupId === undefined) {
-      this.errors.groupId = 'groupId is required';
-    } else if (!validator.isNumeric(groupId.toString())) {
+    if (!validator.isNumeric(groupId.toString())) {
       this.errors.groupId = 'groupId is invalid. enter a number';
     }
     if (title === undefined || validator.isEmpty(title.toString())) {
@@ -67,9 +65,7 @@ export default class Validator {
   }) {
     this.errors = {};
 
-    if (groupId === undefined) {
-      this.errors.groupId = 'groupId is required';
-    } else if (!validator.isNumeric(groupId.toString())) {
+    if (!validator.isNumeric(groupId.toString())) {
       this.errors.groupId = 'groupId is invalid. enter a number';
     }
     if (userId === undefined) {
@@ -115,9 +111,7 @@ export default class Validator {
   static validateFetchGroupMessages(groupId) {
     this.errors = {};
 
-    if (groupId === undefined) {
-      this.errors.groupId = 'groupId is required';
-    } else if (!validator.isNumeric(groupId.toString())) {
+    if (!validator.isNumeric(groupId.toString())) {
       this.errors.groupId = 'groupId is invalid. enter a number';
     }
 
