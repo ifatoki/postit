@@ -6,7 +6,10 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register ./server/test --recursive --timeout 50000",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "nodemon --watch server ./server/bin/www --exec babel-node"
+    "dev": "nodemon --watch server ./server/bin/www --exec babel-node",
+    "prestart": "npm run build",
+    "start": "node ./dist/bin/www",
+    "build": "rimraf ./dist && babel ./server -d ./dist --copy-files"
   },
   "nyc": {
     "exclude": [
@@ -37,6 +40,7 @@
     "morgan": "^1.8.2",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
+    "rimraf": "^2.6.2",
     "sequelize": "^4.8.3",
     "serve-favicon": "^2.4.3",
     "validator": "^8.2.0"

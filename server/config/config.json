@@ -14,10 +14,10 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "andeladeveloper",
-    "password": null,
-    "database": "postit-production",
-    "host": "localhost",
+    "username": "epaegbkt",
+    "password": "o_-odyblH6behVSCUvB3Gj6dl_XnKHOo",
+    "database": "epaegbkt",
+    "host": "elmer.db.elephantsql.com",
     "dialect": "postgres"
   }
 }
