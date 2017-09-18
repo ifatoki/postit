@@ -43,82 +43,82 @@ describe('User Controller: ', () => {
                 .which.equals(mockUser1.username)));
 
       it(`should return 400 error and
-        'password is required\nemail is required\nusername is required\n'
-        message when blank userData is passed`, (done) => {
-          const expectedMessage =
-            'password is required\nemail is required\nusername is required\n';
-          request(app)
-            .post('/api/user/signup')
-            .type('form')
-            .send({})
-            .expect(400)
-            .then((res) => {
-              expect(res.body).to.have.property('message')
-                .which.equals(expectedMessage);
-              done();
-            })
-            .catch(err => done(err));
-        });
+      'password is required\nemail is required\nusername is required\n'
+      message when blank userData is passed`, (done) => {
+        const expectedMessage =
+          'password is required\nemail is required\nusername is required\n';
+        request(app)
+          .post('/api/user/signup')
+          .type('form')
+          .send({})
+          .expect(400)
+          .then((res) => {
+            expect(res.body).to.have.property('message')
+              .which.equals(expectedMessage);
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should return 400 error and
-        'email is invalid\n'
-        message when an invalid email address is passed`, (done) => {
-          const expectedMessage = 'email is invalid\n';
-          request(app)
-            .post('/api/user/signup')
-            .type('form')
-            .send({
-              ...mockUser1,
-              email: 'invalidemailadrress.com'
-            })
-            .expect(400)
-            .then((res) => {
-              expect(res.body).to.have.property('message')
-                .which.equals(expectedMessage);
-              done();
-            })
-            .catch(err => done(err));
-        });
+      'email is invalid\n'
+      message when an invalid email address is passed`, (done) => {
+        const expectedMessage = 'email is invalid\n';
+        request(app)
+          .post('/api/user/signup')
+          .type('form')
+          .send({
+            ...mockUser1,
+            email: 'invalidemailadrress.com'
+          })
+          .expect(400)
+          .then((res) => {
+            expect(res.body).to.have.property('message')
+              .which.equals(expectedMessage);
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should return 400 error and
-        'confirmation password is required\n' message when confirmation
-        password is omitted or blank but password is passed`, (done) => {
-          const expectedMessage = 'confirmation password is required\n';
-          request(app)
-            .post('/api/user/signup')
-            .type('form')
-            .send({
-              ...mockUser1,
-              confirmPassword: ''
-            })
-            .expect(400)
-            .then((res) => {
-              expect(res.body).to.have.property('message')
-                .which.equals(expectedMessage);
-              done();
-            })
-            .catch(err => done(err));
-        });
+      'confirmation password is required\n' message when confirmation
+      password is omitted or blank but password is passed`, (done) => {
+        const expectedMessage = 'confirmation password is required\n';
+        request(app)
+          .post('/api/user/signup')
+          .type('form')
+          .send({
+            ...mockUser1,
+            confirmPassword: ''
+          })
+          .expect(400)
+          .then((res) => {
+            expect(res.body).to.have.property('message')
+              .which.equals(expectedMessage);
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should return 400 error and
-        "passwords don't match" message when confirmation
-        password doesn't match password that is passed`, (done) => {
-          const expectedMessage = "passwords don't match\n";
-          request(app)
-            .post('/api/user/signup')
-            .type('form')
-            .send({
-              ...mockUser1,
-              confirmPassword: 'definitely not a match'
-            })
-            .expect(400)
-            .then((res) => {
-              expect(res.body).to.have.property('message')
-                .which.equals(expectedMessage);
-              done();
-            })
-            .catch(err => done(err));
-        });
+      "passwords don't match" message when confirmation
+      password doesn't match password that is passed`, (done) => {
+        const expectedMessage = "passwords don't match\n";
+        request(app)
+          .post('/api/user/signup')
+          .type('form')
+          .send({
+            ...mockUser1,
+            confirmPassword: 'definitely not a match'
+          })
+          .expect(400)
+          .then((res) => {
+            expect(res.body).to.have.property('message')
+              .which.equals(expectedMessage);
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should return 409 error and 'user with this email already exists'
         message when an existing email is passed`, () =>
@@ -163,25 +163,25 @@ describe('User Controller: ', () => {
                 .which.equals(mockUser1.username)));
 
       it(`should return status 400 and an error message 
-        'email or username is required/n'
-        when property identifier isn't sent`, (done) => {
-          const expectedMessage =
-            'password is required\nemail or username is required\n';
-          request(app)
-            .post('/api/user/signin')
-            .type('form')
-            .send({
-              ...mockUser1,
-              password: ''
-            })
-            .expect(400)
-            .then((res) => {
-              expect(res.body).to.have.property('message')
-                .which.equals(expectedMessage);
-              done();
-            })
-            .catch(err => done(err));
-        });
+      'email or username is required/n'
+      when property identifier isn't sent`, (done) => {
+        const expectedMessage =
+          'password is required\nemail or username is required\n';
+        request(app)
+          .post('/api/user/signin')
+          .type('form')
+          .send({
+            ...mockUser1,
+            password: ''
+          })
+          .expect(400)
+          .then((res) => {
+            expect(res.body).to.have.property('message')
+              .which.equals(expectedMessage);
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should return status 400 and an error message 'user not found'
       when property identifier is not recognized as a username or email`, () =>

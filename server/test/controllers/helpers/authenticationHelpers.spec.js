@@ -34,17 +34,17 @@ describe('Authentication Helpers:', () => {
         }));
 
     it(`should be rejected with userError USER_INVALID_PASSWORD when 
-      password doesn't match encrypted text`, () =>
-        encryptPassword(samplePassword)
-          .then((password) => {
-            const sampleUser = {
-              password
-            };
-            return expect(comparePassword(wrongPassword, sampleUser))
-              .to.be.rejectedWith(
-                Error,
-                Errors.userErrors.USER_INVALID_PASSWORD.toString()
-              );
-          }));
+    password doesn't match encrypted text`, () =>
+      encryptPassword(samplePassword)
+        .then((password) => {
+          const sampleUser = {
+            password
+          };
+          return expect(comparePassword(wrongPassword, sampleUser))
+            .to.be.rejectedWith(
+              Error,
+              Errors.userErrors.USER_INVALID_PASSWORD.toString()
+            );
+        }));
   });
 });
