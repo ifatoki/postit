@@ -67,133 +67,133 @@ describe('Group Controller: ', () => {
       });
 
       it(`should throw a 409 error when attempting to create a group with
-        duplicate name`, (done) => {
-          request(app)
-            .post('/api/group')
-            .type('form')
-            .send(mockGroup1)
-            .expect(409)
-            .then((res) => {
-              expect(res.body)
-                .to.have.property('message')
-                .which.equals('group with this name already exists');
-              done();
-            })
-            .catch(err => done(err));
-        });
+      duplicate name`, (done) => {
+        request(app)
+          .post('/api/group')
+          .type('form')
+          .send(mockGroup1)
+          .expect(409)
+          .then((res) => {
+            expect(res.body)
+              .to.have.property('message')
+              .which.equals('group with this name already exists');
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should throw a 400 error when trying to create a new group without
-        a name`, (done) => {
-          const tempNameStore = mockGroup1.name;
-          mockGroup1.name = '';
-          request(app)
-            .post('/api/group')
-            .type('form')
-            .send(mockGroup1)
-            .expect(400)
-            .then((res) => {
-              expect(res.body)
-                .to.have.property('message')
-                .which.equals('group name is required\n');
-              mockGroup1.name = tempNameStore;
-              done();
-            })
-            .catch(err => done(err));
-        });
+      a name`, (done) => {
+        const tempNameStore = mockGroup1.name;
+        mockGroup1.name = '';
+        request(app)
+          .post('/api/group')
+          .type('form')
+          .send(mockGroup1)
+          .expect(400)
+          .then((res) => {
+            expect(res.body)
+              .to.have.property('message')
+              .which.equals('group name is required\n');
+            mockGroup1.name = tempNameStore;
+            done();
+          })
+          .catch(err => done(err));
+      });
     });
 
     describe('POST /api/group/:groupId/user route', () => {
       it(`should add the passed user to the passed group and return a 200
-        status and success message`, (done) => {
-          const expectedMessage =
-            `${mockUser1.username} added successfully to ${mockGroup1.name}`;
+      status and success message`, (done) => {
+        const expectedMessage =
+          `${mockUser1.username} added successfully to ${mockGroup1.name}`;
 
-          User.create(mockUser1)
-            .then(user => request(app)
-              .post(`/api/group/${mockGroup1Id}/user`)
-              .type('form')
-              .send({
-                userId: user.id
-              })
-              .expect(200))
-            .then((res) => {
-              expect(res.body)
-                .to.have.property('message').which
-                .equals(expectedMessage);
-              done();
+        User.create(mockUser1)
+          .then(user => request(app)
+            .post(`/api/group/${mockGroup1Id}/user`)
+            .type('form')
+            .send({
+              userId: user.id
             })
-            .catch(err => done(err));
-        });
+            .expect(200))
+          .then((res) => {
+            expect(res.body)
+              .to.have.property('message').which
+              .equals(expectedMessage);
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should return message 'groupId is invalid. enter a number' with code
-        400 when a string is entered as the groupId`, (done) => {
-          request(app)
-            .post('/api/group/stringGroup/user')
-            .type('form')
-            .send({
-              userId: 1
-            })
-            .expect(400)
-            .then((res) => {
-              expect(res.body)
-                .to.have.property('message').which
-                .equals('groupId is invalid. enter a number\n');
-              done();
-            })
-            .catch(err => done(err));
-        });
+      400 when a string is entered as the groupId`, (done) => {
+        request(app)
+          .post('/api/group/stringGroup/user')
+          .type('form')
+          .send({
+            userId: 1
+          })
+          .expect(400)
+          .then((res) => {
+            expect(res.body)
+              .to.have.property('message').which
+              .equals('groupId is invalid. enter a number\n');
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should return message 'group not found' with code
-        404 when a group with passed groupId is not found`, (done) => {
-          request(app)
-            .post('/api/group/0/user')
-            .type('form')
-            .send({
-              userId: 1
-            })
-            .expect(404)
-            .then((res) => {
-              expect(res.body)
-                .to.have.property('message').which
-                .equals('group not found');
-              done();
-            })
-            .catch(err => done(err));
-        });
+      404 when a group with passed groupId is not found`, (done) => {
+        request(app)
+          .post('/api/group/0/user')
+          .type('form')
+          .send({
+            userId: 1
+          })
+          .expect(404)
+          .then((res) => {
+            expect(res.body)
+              .to.have.property('message').which
+              .equals('group not found');
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should return message 'userId is required' with code
-        400 when userId is not passed`, (done) => {
-          request(app)
-            .post('/api/group/1/user')
-            .type('form')
-            .send({})
-            .expect(400)
-            .then((res) => {
-              expect(res.body)
-                .to.have.property('message').which
-                .equals('userId is required\n');
-              done();
-            })
-            .catch(err => done(err));
-        });
+      400 when userId is not passed`, (done) => {
+        request(app)
+          .post('/api/group/1/user')
+          .type('form')
+          .send({})
+          .expect(400)
+          .then((res) => {
+            expect(res.body)
+              .to.have.property('message').which
+              .equals('userId is required\n');
+            done();
+          })
+          .catch(err => done(err));
+      });
 
       it(`should return message 'userId is invalid. enter a number' with code
-        400 when the userId passed is not a number`, (done) => {
-          request(app)
-            .post('/api/group/1/user')
-            .type('form')
-            .send({
-              userId: 'stringUserId'
-            })
-            .expect(400)
-            .then((res) => {
-              expect(res.body)
-                .to.have.property('message').which
-                .equals('userId is invalid. enter a number\n');
-              done();
-            })
-            .catch(err => done(err));
-        });
+      400 when the userId passed is not a number`, (done) => {
+        request(app)
+          .post('/api/group/1/user')
+          .type('form')
+          .send({
+            userId: 'stringUserId'
+          })
+          .expect(400)
+          .then((res) => {
+            expect(res.body)
+              .to.have.property('message').which
+              .equals('userId is invalid. enter a number\n');
+            done();
+          })
+          .catch(err => done(err));
+      });
     });
   });
 });
