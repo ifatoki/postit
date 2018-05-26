@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "andeladeveloper",
+    "password": null,
+    "database": "postit-dev",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "uvqizycl",
+    "password": "oBMXmKJk_62yJkwv2RszNKFOGJtC_jmO",
+    "database": "uvqizycl",
+    "host": "elmer.db.elephantsql.com",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "epaegbkt",
+    "password": "o_-odyblH6behVSCUvB3Gj6dl_XnKHOo",
+    "database": "epaegbkt",
+    "host": "elmer.db.elephantsql.com",
+    "dialect": "postgres"
+  }
+}
